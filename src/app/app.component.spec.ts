@@ -20,10 +20,10 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('counter-with-tests');
   });
 
-  it('should render title', () => {
+  it('should no longer render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('counter-with-tests app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).not.toContain('counter-with-tests app is running!');
   });
 });
