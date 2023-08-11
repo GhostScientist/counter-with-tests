@@ -2,12 +2,22 @@ import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { CounterComponent } from './counter/counter.component';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { Store } from '@ngrx/store';
 
 describe('AppComponent', () => {
-  beforeEach(() => TestBed.configureTestingModule({
+  let store: MockStore<{count: number}>;
+  const initialState = { count: 0 };
+
+  beforeEach(() => {
+    
+    TestBed.configureTestingModule({
     imports: [RouterTestingModule],
-    declarations: [AppComponent, CounterComponent]
-  }));
+    declarations: [AppComponent, CounterComponent],
+    providers: [provideMockStore( { initialState })]
+  });
+  store = TestBed.inject(MockStore);
+});
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
@@ -23,6 +33,7 @@ describe('AppComponent', () => {
 
   it('should no longer render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
+    store.setState({ count: 0 });
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.content span')?.textContent).not.toContain('counter-with-tests app is running!');
@@ -30,8 +41,12 @@ describe('AppComponent', () => {
 
   it('should no longer render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
+
+    store.setState({ count: 0 });
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
+
+    
     expect(compiled.querySelector('p')?.textContent).toContain('Count: 0');
   });
 });
