@@ -1,3 +1,4 @@
-<p>Count: {{ count }}</p>
+<p>Count: {{ count$ | async }}</p>
 <button (click)="increment()">Plus</button>
 <button (click)="decrement()">Minus</button>
+<button (click)="reset()">Reset</button>
